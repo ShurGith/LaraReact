@@ -1,0 +1,55 @@
+created:
+    - app/Http/Controllers/ProductController.php
+    - database/factories/ProductFactory.php
+    - database/factories/FeaturetitleFactory.php
+    - database/factories/GeneraloptionsFactory.php
+    - database/factories/CategoryFactory.php
+    - database/factories/TagFactory.php
+    - database/factories/OrderFactory.php
+    - database/factories/BlogFactory.php
+    - database/factories/CategoryblogFactory.php
+    - database/factories/TagblogFactory.php
+    - database/factories/BlogTagFactory.php
+    - database/migrations/2025_04_27_220143_create_products_table.php
+    - database/migrations/2025_04_27_220144_create_featuretitles_table.php
+    - database/migrations/2025_04_27_220145_create_generaloptions_table.php
+    - database/migrations/2025_04_27_220146_create_categories_table.php
+    - database/migrations/2025_04_27_220147_create_tags_table.php
+    - database/migrations/2025_04_27_220148_create_orders_table.php
+    - database/migrations/2025_04_27_220149_create_blogs_table.php
+    - database/migrations/2025_04_27_220150_create_categoryblogs_table.php
+    - database/migrations/2025_04_27_220151_create_tagblogs_table.php
+    - database/migrations/2025_04_27_220152_create_blog_tags_table.php
+    - database/migrations/2025_04_27_220153_create_product_tag_table.php
+    - database/migrations/2025_04_27_220154_create_blog_categoryblog_table.php
+    - app/Models/Product.php
+    - app/Models/Featuretitle.php
+    - app/Models/Generaloptions.php
+    - app/Models/Category.php
+    - app/Models/Tag.php
+    - app/Models/Order.php
+    - app/Models/Blog.php
+    - app/Models/Categoryblog.php
+    - app/Models/Tagblog.php
+    - app/Models/BlogTag.php
+    - tests/Feature/Http/Controllers/ProductControllerTest.php
+    - app/Http/Requests/ProductStoreRequest.php
+    - app/Http/Requests/ProductUpdateRequest.php
+    - resources/views/product/index.blade.php
+    - resources/views/product/create.blade.php
+    - resources/views/product/show.blade.php
+    - resources/views/product/edit.blade.php
+updated:
+    - routes/web.php
+models:
+    User: { name: string, email: string, email_verified_at: 'timestamp nullable', password: string, remember_token: 'string:100 nullable' }
+    Product: { name: 'string index', description: 'longtext nullable', slug: 'string unique', images: 'json nullable', features: 'longtext nullable', price: 'decimal:8,2 nullable', active: 'boolean default:1', oferta: 'boolean default:0', descuento: 'integer nullable', units: 'integer nullable', stars: 'integer nullable', relationships: { hasMany: Featuresproduct, belongsToMany: Tag, belongsTo: 'User, Category' } }
+    Featuretitle: { title: 'string index', text: longtext, timestamps: false, relationships: { belongsTo: Product } }
+    Generaloptions: { name: 'string index', value: string, timestamps: false }
+    Category: { name: 'string index', slug: 'string unique nullable', bgcolor: 'text nullable', color: 'string nullable', image: 'text nullable', icon: 'text nullable', icon_active: 'boolean default:0', timestamps: false, relationships: { hasMany: Tag } }
+    Tag: { name: 'string index', slug: 'string unique nullable', bgcolor: 'text nullable', color: 'string nullable', image: 'text nullable', icon: 'text nullable', icon_active: 'boolean default:0', timestamps: false, relationships: { hasMany: Product, belongsTo: Category } }
+    Order: { buyer_id: 'id foreign:users', seller_id: 'id foreign:users', product_id: 'id foreign:products', quantity: integer, relationships: { hasMany: Product } }
+    Blog: { title: string, slug: 'string unique', content: 'longtext nullable', images: 'text nullable', active: 'boolean default:0', date_published: timestamp, relationships: { belongsTo: 'User, Categoryblog' } }
+    Categoryblog: { name: string, ico_active: 'boolean default:0', image: 'string nullable', icon: 'string nullable', color: 'string nullable', bg_color: 'string nullable', timestamps: false, relationships: { belongsToMany: Blog, hasMany: Tagblog } }
+    Tagblog: { name: string, ico_active: 'boolean default:0', image: 'string nullable', icon: 'string nullable', color: 'string nullable', bg_color: 'string nullable', timestamps: false, relationships: { belongsTo: CategoryBlog } }
+    BlogTag: { tag_id: foreignId, blog_id: foreignId }

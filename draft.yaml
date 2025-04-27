@@ -1,0 +1,103 @@
+models:
+  Product:
+    name: string index
+    description: longtext nullable
+    slug: string unique
+    images: json nullable
+    features: longtext nullable
+    price: decimal:8,2 nullable
+    active: boolean default:1
+    oferta: boolean default:0
+    descuento: integer nullable
+    units: integer nullable
+    stars: integer nullable
+    relationships:
+      hasMany: Featuresproduct
+      belongsToMany: Tag
+      belongsTo: User, Category
+
+  Featuretitle:
+    title: string index
+    text: longtext
+    timestamps: false
+    relationships:
+      belongsTo: Product
+
+  Generaloptions:
+    name: string index
+    value: string
+    timestamps: false
+
+  Category:
+    name: string index
+    slug: string unique nullable
+    bgcolor: text nullable
+    color: string nullable
+    image: text nullable
+    icon: text nullable
+    icon_active: boolean default:0
+    timestamps: false
+    relationships:
+      hasMany: Tag
+
+  Tag:
+    name: string index
+    slug: string unique nullable
+    bgcolor: text nullable
+    color: string nullable
+    image: text nullable
+    icon: text nullable
+    icon_active: boolean default:0
+    timestamps: false
+    relationships:
+      hasMany: Product
+      belongsTo: Category
+
+  Order:
+    buyer_id: id foreign:users
+    seller_id: id foreign:users
+    product_id: id foreign:products
+    quantity: integer
+    relationships:
+      hasMany: Product
+
+  Blog:
+    title: string
+    slug: string unique
+    content: longtext nullable
+    images: text nullable
+    active: boolean default:0
+    date_published: timestamp
+    relationships:
+      belongsTo: User, Categoryblog
+
+  Categoryblog:
+    name: string
+    ico_active: boolean default:0
+    image: string nullable
+    icon: string nullable
+    color: string nullable
+    bg_color: string nullable
+    timestamps: false
+    relationships:
+      belongsToMany: Blog
+      hasMany: Tagblog
+
+  Tagblog:
+    name: string
+    ico_active: boolean default:0
+    image: string nullable
+    icon: string nullable
+    color: string nullable
+    bg_color: string nullable
+    timestamps: false
+    relationships:
+      belongsTo: CategoryBlog
+
+  BlogTag:
+    tag_id: foreignId
+    blog_id: foreignId
+
+controllers:
+  Product:
+    resource
